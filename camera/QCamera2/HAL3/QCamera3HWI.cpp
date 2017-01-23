@@ -495,9 +495,8 @@ QCamera3HardwareInterface::~QCamera3HardwareInterface()
     pthread_mutex_destroy(&mMutex);
 
     if (hasPendingBuffers) {
-        ALOGE("%s: Not all buffers were returned. Notified the camera daemon process to restart."
-                " Exiting here...", __func__);
-        exit(EXIT_FAILURE);
+        ALOGE("%s: Not all buffers are returned. Aborting...", __func__);
+        abort();
     }
     CDBG("%s: X", __func__);
 }

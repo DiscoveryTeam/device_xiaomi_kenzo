@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2015, The Linux Foundataion. All rights reserved.
+/* Copyright (c) 2012-2016, The Linux Foundataion. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -44,6 +44,10 @@ extern "C" {
 
 //OFFSET, SIZE, USAGE, TIMESTAMP, FORMAT
 #define VIDEO_METADATA_NUM_INTS 5
+
+#ifdef USE_MEDIA_EXTENSIONS
+#define VIDEO_METADATA_NUM_COMMON_INTS   1
+#endif
 
 namespace qcamera {
 
@@ -220,10 +224,17 @@ public:
     int convCamtoOMXFormat(cam_format_t format);
     int getUsage(){return mUsage;};
     int getFormat(){return mFormat;};
+#ifdef USE_MEDIA_EXTENSIONS
+    native_handle_t *getNativeHandle(uint32_t index, bool metadata = true);
+    int closeNativeHandle(const void *data, bool metadata = true);
+#endif
 private:
     camera_memory_t *mMetadata[MM_CAMERA_MAX_NUM_FRAMES];
     uint8_t mMetaBufCount;
     int mUsage, mFormat;
+#ifdef USE_MEDIA_EXTENSIONS
+    native_handle_t *mNativeHandle[MM_CAMERA_MAX_NUM_FRAMES];
+#endif
 };
 
 

@@ -5903,6 +5903,13 @@ TRANS_INIT_DONE:
  *==========================================================================*/
 void QCameraParameters::deinit()
 {
+    if (NULL != m_pParamHeap) {
+        m_pParamHeap->deallocate();
+        delete m_pParamHeap;
+        m_pParamHeap = NULL;
+        m_pParamBuf = NULL;
+    }
+
     if (!m_bInited) {
         return;
     }
@@ -5923,12 +5930,7 @@ void QCameraParameters::deinit()
     }
 
     m_pCapability = NULL;
-    if (NULL != m_pParamHeap) {
-        m_pParamHeap->deallocate();
-        delete m_pParamHeap;
-        m_pParamHeap = NULL;
-        m_pParamBuf = NULL;
-    }
+
     if (NULL != m_pRelCamSyncHeap) {
         m_pRelCamSyncHeap->deallocate();
         delete m_pRelCamSyncHeap;
@@ -6940,7 +6942,7 @@ int32_t QCameraParameters::configureFlash(cam_capture_frame_config_t &frame_conf
 
         rc = setCDSMode(CAM_CDS_MODE_OFF, false);
         if (rc != NO_ERROR) {
-            ALOGE("%s: Failed to configure csd mode", __func__);
+            ALOGE("%s: Failed to configure cds mode", __func__);
             return rc;
         }
 
@@ -7176,7 +7178,7 @@ int32_t QCameraParameters::resetFrameCapture(bool commitSettings)
 
         rc = setCDSMode(mCds_mode, false);
         if (rc != NO_ERROR) {
-            ALOGE("%s: Failed to configure csd mode", __func__);
+            ALOGE("%s: Failed to configure cds mode", __func__);
             return rc;
         }
     }

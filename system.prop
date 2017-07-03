@@ -10,6 +10,7 @@ voice.voip.conc.disabled=true
 # Camera
 media.camera.ts.monotonic=1
 persist.camera.HAL3.enabled=1
+persist.capture.burst.exposures=-5,0,5
 
 # Radio
 persist.radio.cs_srv_type=1
@@ -19,3 +20,4 @@ persist.radio.start_ota_daemon=1
 
 # Force enable FastDormancy
 persist.env.fastdorm.enabled=true
+
